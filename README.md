@@ -1,5 +1,16 @@
 # FinancialTracker
 
+# Personal Finance Tracker
+# Description: Build an application that helps users track their personal finances, including income, expenses, and budgeting. The application should allow users to input their financial transactions and categorize them (e.g., groceries, utilities, salary). It could also provide simple statistics on spending.
+
+#----------------------------------------------------------------------------------------------------
+# Key Features:
+
+# Add Expenses: Users can input their expenses by providing the date (in YYYY-MM-DD format), expense category, and the amount spent. The application stores this information in a text file named "expenses.txt" for future reference.
+
+# View Expenses: The Expense Tracker displays all recorded expenses in a tabular format. It presents details such as the date, expense category, and amount, along with a total expense calculated from the accumulated amounts.
+
+# Delete Expenses: Users can delete any unwanted expense from the list by selecting the corresponding entry and clicking the "Delete Expense" button. The entry will be removed from both the GUI and the "expenses.txt" file.
 
 
 ## Getting started
