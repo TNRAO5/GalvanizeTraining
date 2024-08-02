@@ -21,12 +21,13 @@ def listAllExpenses():
     '''''This function will retrieve the data from the database and insert it to the tkinter data table'''  
   
     # using some global variables  
-    global dbconnector, data_table  
+    global dbconnector, data_table , totalamount  
     # clearing the table  
     data_table.delete(*data_table.get_children())  
     # executing the SQL SELECT command to retrieve the data from the database table  
     all_data = dbconnector.execute('SELECT * FROM ExpenseTracker')  
-  
+    # totalamount = dbconnector.execute('SELECT sum(amount) FROM ExpenseTracker')
+    # print((totalamount))
     # listing the data from the table  
     data = all_data.fetchall()  
       
@@ -41,7 +42,7 @@ def viewExpenseInfo():
     # using some global variables   
     global data_table  
     global dateField, payee, description, amount, modeOfPayment  
-  
+    
     # return a message box displaying error if no row is selected from the table  
     if not data_table.selection():  
         mb.showerror('No expense selected', 'Please select an expense from the table to view its details')  
@@ -57,7 +58,6 @@ def viewExpenseInfo():
   
     # setting the listed data in their respective entry fields  
     dateField.set_date(expenditureDate) ; payee.set(val[2]) ; description.set(val[3]) ; amount.set(val[4]) ; modeOfPayment.set(val[5])  
-  
 # function to clear the entries from the entry fields  
 def clearFields():  
     '''''This function will clear all the entries from the entry fields'''  
@@ -145,7 +145,11 @@ def removeAllExpenses():
 
 #View all the expenses from DB
 def viewAllExpenses():  
-    listAllExpenses()  
+    listAllExpenses() 
+
+def monthlyExpenses():
+    listAllExpenses() 
+    # sum([ row[3] for row in cur.fetchall()])
 # function to add an expense  
 def addAnotherExpense():  
     '''''This function will add an expense to the table and database'''  
@@ -305,7 +309,7 @@ if __name__ == "__main__":
     # creating an instance of the Tk() class  
     main_win = Tk()  
     # setting the title of the application  
-    main_win.title("!!!!!!!!!Licensed by Narayana Tangudu!!!!!!!!!")  
+    main_win.title("!!!!!!!!! Licensed by Narayana Tangudu & Satya Medisetti !!!!!!!!!")  
     # setting the size and position of the window  
     main_win.geometry("1200x650")  
     # disabling the resizable option for better UI  
@@ -532,11 +536,24 @@ if __name__ == "__main__":
         font = ("Bahnschrift Condensed", "13"),  
         width = 30,  
         bg = "#ff85a7",  
-        fg = "#FFFFFF",  
+        fg = "#000000",  
         relief = GROOVE,  
         activebackground = "#8B0000",  
         activeforeground = "#FFB4B4",  
         command = clearFields  
+        )  
+    # Monthly exp 
+    monthlyButton = Button(  
+        frameL3,  
+        text = "Total Monthly Expenses",  
+        font = ("Bahnschrift Condensed", "13"),  
+        width = 30,  
+        bg = "#8cd5ff",  
+        fg = "#000000",  
+        relief = GROOVE,  
+        activebackground = "#8B0000",  
+        activeforeground = "#FFB4B4",  
+        command = monthlyExpenses  
         )  
 
     # DOllar value vs INR  
@@ -545,8 +562,8 @@ if __name__ == "__main__":
         text = "Today USD Vs INR",  
         font = ("Bahnschrift Condensed", "13"),  
         width = 30,  
-        bg = "#4950ff",  
-        fg = "#FFFFFF",  
+        bg = "#8cd5ff",  
+        fg = "#000000",  
         relief = GROOVE,  
         activebackground = "#8B0000",  
         activeforeground = "#FFB4B4",  
@@ -556,8 +573,9 @@ if __name__ == "__main__":
     # using the grid() method to set the position of the above buttons  
     insertButton.grid(row = 0, column = 0, sticky = W, padx = 50, pady = 10)  
     convertButton.grid(row = 1, column = 0, sticky = W, padx = 50, pady = 10)  
-    resetButton.grid(row = 2, column = 0, sticky = W, padx = 50, pady = 10)  
-    dollarButton.grid(row = 3, column = 0, sticky = W, padx = 50, pady = 10)  
+    resetButton.grid(row = 2, column = 0, sticky = W, padx = 50, pady = 10)
+    monthlyButton.grid(row = 3, column = 0, sticky = W, padx = 50, pady = 10)    
+    dollarButton.grid(row = 4, column = 0, sticky = W, padx = 50, pady = 10)  
     # ---------------- Adding widgets to the frameR1 frame ----------------  
   
     # creating buttons to manipulate data  
@@ -621,7 +639,7 @@ if __name__ == "__main__":
     # delete all button  
     deleteAllButton = Button(  
         frameR1,  
-        text = "Delete All Expense",  
+        text = "Delete All Expenses",  
         font = ("Bahnschrift Condensed", "13"),  
         width = 35,  
         # bg = "#FFDEAD", 
@@ -636,7 +654,7 @@ if __name__ == "__main__":
     # View all button  
     viewAllButton = Button(  
         frameR1,  
-        text = "View All Expense",  
+        text = "View All Expenses",  
         font = ("Bahnschrift Condensed", "13"),  
         width = 35,  
         # bg = "#FFDEAD", 
